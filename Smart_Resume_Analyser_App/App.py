@@ -1,8 +1,8 @@
 import streamlit as st
 import nltk
-import spacy
+# import spacy
 nltk.download('stopwords')
-spacy.load('en_core_web_sm')
+# spacy.load('en_core_web_sm')
 import pandas as pd
 import base64, random
 import time, datetime
@@ -80,20 +80,20 @@ def course_recommender(course_list):
     return rec_course
 
 
-connection = pymysql.connect(host='localhost', user='root', password='')
-cursor = connection.cursor()
+# connection = pymysql.connect(host='localhost', user='root', password='')
+# cursor = connection.cursor()
 
 
-def insert_data(name, email, res_score, timestamp, no_of_pages, reco_field, cand_level, skills, recommended_skills,
-                courses):
-    DB_table_name = 'user_data'
-    insert_sql = "insert into " + DB_table_name + """
-    values (0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-    rec_values = (
-    name, email, str(res_score), timestamp, str(no_of_pages), reco_field, cand_level, skills, recommended_skills,
-    courses)
-    cursor.execute(insert_sql, rec_values)
-    connection.commit()
+# def insert_data(name, email, res_score, timestamp, no_of_pages, reco_field, cand_level, skills, recommended_skills,
+#                 courses):
+#     DB_table_name = 'user_data'
+#     insert_sql = "insert into " + DB_table_name + """
+#     values (0,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+#     rec_values = (
+#     name, email, str(res_score), timestamp, str(no_of_pages), reco_field, cand_level, skills, recommended_skills,
+#     courses)
+#     cursor.execute(insert_sql, rec_values)
+#     connection.commit()
 
 
 st.set_page_config(
@@ -112,10 +112,10 @@ def run():
     img = img.resize((250, 250))
     st.image(img)
 
-    # Create the DB
-    db_sql = """CREATE DATABASE IF NOT EXISTS SRA;"""
-    cursor.execute(db_sql)
-    connection.select_db("sra")
+    # # Create the DB
+    # db_sql = """CREATE DATABASE IF NOT EXISTS SRA;"""
+    # cursor.execute(db_sql)
+    # connection.select_db("sra")
 
     # Create table
     DB_table_name = 'user_data'
@@ -133,7 +133,7 @@ def run():
                      Recommended_courses VARCHAR(600) NOT NULL,
                      PRIMARY KEY (ID));
                     """
-    cursor.execute(table_sql)
+    # cursor.execute(table_sql)
     if choice == 'Resume Analyser':
         # st.markdown('''<h4 style='text-align: left; color: #d73b5c;'>* Upload your resume, and get smart recommendation based on it."</h4>''',
         #             unsafe_allow_html=True)
@@ -365,9 +365,9 @@ def run():
                     "** Note: This score is calculated based on the content that you have added in your Resume. **")
                 st.balloons()
 
-                insert_data(resume_data['name'], resume_data['email'], str(resume_score), timestamp,
-                            str(resume_data['no_of_pages']), reco_field, cand_level, str(resume_data['skills']),
-                            str(recommended_skills), str(rec_course))
+                # insert_data(resume_data['name'], resume_data['email'], str(resume_score), timestamp,
+                #             str(resume_data['no_of_pages']), reco_field, cand_level, str(resume_data['skills']),
+                #             str(recommended_skills), str(rec_course))
 
                 
 run()
